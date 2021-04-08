@@ -2,19 +2,20 @@
 ## Goal of the project
 - this is basically the description from the proposal
 ## Team
-- I want real names and github user names
-- It is also a good idea to include links to your individual github profiles.
+- Breanna Holloman [(BreAmazinn)](https://github.com/BreAmazinn)
+- Garrett Slone [(garrettbslone)](https://github.com/garrettbslone)
 - Keiti Lo [(lomcaitlin)](https://github.com/lomcaitlin)
+- Tyler Johnson-Haro [(Jumpman5)](https://github.com/Jumpman5)
 ## Minimum Viable Product
-- This should tie in with the goal. If the goal is to offer social media for cats (Clowder Connector), than it would be something like 'create a profile and share stories'
-- https://en.wikipedia.org/wiki/Minimum_viable_product
+- Wired Gamble will allow users to gamble on at least one game. It
+  will include account creation, betting on games, winning/losing
+  coins, and earning more coins thru ads
 ## Timeline for completion with goals
 - These goals should relate to the user stories that you have on your project board
 - The timeline should be updated as the project progresses
 ## Mockups and ERDs
-- These may need to be improved from the proposal
-- I also want these to be kept CURRENT that means if the database structure changes, the ERDs will need to change.
+![mockups](https://i.imgur.com/UR9TX4h.png)
+
+![ERD](https://i.imgur.com/Ys4DO10.png)
 ## Technologies
-- link to them
-- We are using Android so a link to that is a bare minimum
-- Include any and all APIs you are using
+- [(Android)](https://www.android.com/)
