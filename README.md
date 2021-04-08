@@ -1,6 +1,6 @@
 # Wired Gamble
 ## Goal of the project
-- this is basically the description from the proposal
+- The goal of Wired Gamble is to allow users to gamble on games using in-app coins.
 ## Team
 - Breanna Holloman [(BreAmazinn)](https://github.com/BreAmazinn)
 - Garrett Slone [(garrettbslone)](https://github.com/garrettbslone)
@@ -11,11 +11,11 @@
   will include account creation, betting on games, winning/losing
   coins, and earning more coins thru ads
 ## Timeline for completion with goals
-- These goals should relate to the user stories that you have on your project board
-- The timeline should be updated as the project progresses
+- See milestones in "Issues"
 ## Mockups and ERDs
 ![mockups](https://i.imgur.com/UR9TX4h.png)
 
 ![ERD](https://i.imgur.com/Ys4DO10.png)
 ## Technologies
-- [(Android)](https://www.android.com/)
+- [Android](https://www.android.com/)
+- [Node.JS](https://nodejs.org/en/)
