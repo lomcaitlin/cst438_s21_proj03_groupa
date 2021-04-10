@@ -1,0 +1,26 @@
+{
+  "name": "wired-gamble",
+  "version": "1.0.0",
+  "description": "- this is basically the description from the proposal ## Team - Breanna Holloman [(BreAmazinn)](https://github.com/BreAmazinn) - Garrett Slone [(garrettbslone)](https://github.com/garrettbslone) - Keiti Lo [(lomcaitlin)](https://github.com/lomcaitlin) - Tyler Johnson-Haro [(Jumpman5)](https://github.com/Jumpman5) ## Minimum Viable Product - Wired Gamble will allow users to gamble on at least one game. It   will include account creation, betting on games, winning/losing   coins, and earning more coins thru ads ## Timeline for completion with goals - These goals should relate to the user stories that you have on your project board - The timeline should be updated as the project progresses ## Mockups and ERDs ![mockups](https://i.imgur.com/UR9TX4h.png)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lomcaitlin/cst438_s21_proj03_groupa.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lomcaitlin/cst438_s21_proj03_groupa/issues"
+  },
+  "homepage": "https://github.com/lomcaitlin/cst438_s21_proj03_groupa#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
