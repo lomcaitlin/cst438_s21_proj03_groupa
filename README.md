@@ -6,6 +6,7 @@
 - Garrett Slone [(garrettbslone)](https://github.com/garrettbslone)
 - Keiti Lo [(lomcaitlin)](https://github.com/lomcaitlin)
 - Tyler Johnson-Haro [(Jumpman5)](https://github.com/Jumpman5)
+
 ## Minimum Viable Product
 - Wired Gamble will allow users to gamble on at least one game. It
   will include account creation, betting on games, winning/losing
