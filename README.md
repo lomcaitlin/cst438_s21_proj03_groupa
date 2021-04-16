@@ -20,4 +20,4 @@
 ## Technologies
 - [Android](https://www.android.com/)
 - [Node.JS](https://nodejs.org/en/)
-Committing for the hw
+Why can't i commit smh to my branch
