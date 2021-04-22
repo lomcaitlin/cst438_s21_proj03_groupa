@@ -43,6 +43,7 @@
         app:layout_constraintTop_toBottomOf="@id/etUsername" />
 
     <Button
+        android:id="@+id/button_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_bg"
