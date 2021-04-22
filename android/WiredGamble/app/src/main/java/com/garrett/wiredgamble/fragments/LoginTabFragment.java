@@ -101,6 +101,8 @@ public class LoginTabFragment extends Fragment {
                         // log in the user
                         Intent intent = new Intent(getActivity(), MainActivity.class);
                         startActivity(intent);
+                        // close the login activity (to remove the back arrow)
+                        Objects.requireNonNull(getActivity()).finish();
                     } else {
                         Toast.makeText(getContext(), "User Not Found", Toast.LENGTH_LONG).show();
                     }
