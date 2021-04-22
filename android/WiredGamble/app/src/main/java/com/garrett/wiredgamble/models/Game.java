@@ -51,4 +51,8 @@ public class Game extends ParseObject {
     public static void addGame (Game game) {
         sGames.add(game);
     }
+
+    public PlacedBet play () {
+        return null;
+    }
 }
