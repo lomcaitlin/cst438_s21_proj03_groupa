@@ -6,7 +6,12 @@
  */
 package com.garrett.wiredgamble;
 
+import com.garrett.wiredgamble.models.Game;
+import com.garrett.wiredgamble.models.Payout;
+import com.garrett.wiredgamble.models.PlacedBet;
 import com.parse.Parse;
+import com.parse.ParseObject;
+
 import android.app.Application;
 
 public class ParseApplication extends Application {
@@ -20,5 +25,9 @@ public class ParseApplication extends Application {
                 .server("https://parseapi.back4app.com")
                 .build()
         );
+
+        ParseObject.registerSubclass(Game.class);
+        ParseObject.registerSubclass(Payout.class);
+        ParseObject.registerSubclass(PlacedBet.class);
     }
 }
