@@ -6,13 +6,63 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/login_bg"
+        app:layout_constraintHeight_percent=".3"
+        app:layout_constraintVertical_bias="0"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="1dp"
+        android:alpha="1"
+        android:text="Games"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:textSize="70sp"
+        android:shadowColor="@color/black"
+        android:shadowDx="0"
+        android:shadowDy="-4"
+        android:shadowRadius="2"
+        android:layout_margin="20dp"
+        android:paddingTop="20dp"
+        android:fontFamily="@font/aquire_regular"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Games"
+        android:textColor="#1f7035"
+        android:textAlignment="center"
+        android:textSize="68sp"
+        android:shadowColor="#51cf4a"
+        android:shadowDx="0"
+        android:shadowDy="4"
+        android:shadowRadius="15"
+        android:layout_margin="20dp"
+        android:paddingTop="20dp"
+        android:fontFamily="@font/aquire_regular" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvGames"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/rv_bg"
+        android:padding="6dp"
+        app:layout_constraintCircleRadius="20dp"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintHeight_percent=".75"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

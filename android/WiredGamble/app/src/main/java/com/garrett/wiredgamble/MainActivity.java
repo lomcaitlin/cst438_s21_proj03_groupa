@@ -2,6 +2,8 @@ package com.garrett.wiredgamble;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,14 +11,69 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import java.util.Objects;
+import android.util.Log;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.garrett.wiredgamble.adapters.GameAdapter;
+import com.garrett.wiredgamble.models.Game;
+import com.garrett.wiredgamble.models.Payout;
+import com.parse.ParseQuery;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements GameAdapter.OnGameClickListener {
+    private RecyclerView mRvGames;
+    private RecyclerView.LayoutManager mManager;
+    private GameAdapter mAdapter;
+
+    private List<Game> mGames;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mGames = new ArrayList<>();
+
+        buildRecyclerView();
+        queryPayouts();
+    }
+
+    private void queryPayouts() {
+        ParseQuery<Payout> query = ParseQuery.getQuery(Payout.class);
+
+        query.include(Payout.KEY_GAME);
+        query.setLimit(20);
+        query.addDescendingOrder(Payout.KEY_GAME);
+
+        query.findInBackground((payouts, e) -> {
+            if (e != null) {
+                Log.e("MainActivity", "Issues loading Payouts", e);
+                return;
+            }
+
+            mGames.addAll(Payout.unwrapGames(payouts));
+            mAdapter.notifyDataSetChanged();
+        });
+    }
+
+    /**
+     * Wire up the RecyclerView in this activity.
+     */
+    private void buildRecyclerView () {
+        mRvGames = findViewById(R.id.rvGames);
+        mRvGames.setHasFixedSize(true);
+        mManager = new LinearLayoutManager(this);
+        mAdapter = new GameAdapter(mGames, this, this);
+
+        mRvGames.setLayoutManager(mManager);
+        mRvGames.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onGameClick (int position) {
+        Toast.makeText(this, "Clicked: " + position, Toast.LENGTH_SHORT).show();
     }
 
     @Override
