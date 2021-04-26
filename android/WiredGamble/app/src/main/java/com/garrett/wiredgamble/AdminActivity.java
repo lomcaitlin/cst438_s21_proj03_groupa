@@ -2,21 +2,60 @@ package com.garrett.wiredgamble;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.garrett.wiredgamble.adapters.AdminUserAdapter;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-public class AdminActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class AdminActivity extends AppCompatActivity implements AdminUserAdapter.OnAdminUserListener {
+
+    private RecyclerView userRV;
+    private List<ParseUser> users = new ArrayList<>();
+    private AdminUserAdapter adapter;
+    private TextView admin_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+        userRV = findViewById(R.id.users_rv);
+        admin_name = findViewById(R.id.admin_name);
+        admin_name.setText(ParseUser.getCurrentUser().getUsername() + "!");
+        initUserRV();
+        insertUsers();
+    }
+
+    private void insertUsers() {
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.findInBackground((users, e) -> {
+           if (e != null) {
+               Log.e("AdminActivity", "Issues loading users", e);
+               return;
+           }
+           this.users.addAll(users);
+            adapter.notifyDataSetChanged();
+        });
+    }
+
+    private void initUserRV() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        userRV.setLayoutManager(linearLayoutManager);
+        adapter = new AdminUserAdapter(users, this);
+        userRV.setAdapter(adapter);
     }
 
     @Override
@@ -63,5 +102,10 @@ public class AdminActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onAdminUserClick(int position) {
+        Toast.makeText(this, "Clicked: " + position, Toast.LENGTH_SHORT).show();
     }
 }
