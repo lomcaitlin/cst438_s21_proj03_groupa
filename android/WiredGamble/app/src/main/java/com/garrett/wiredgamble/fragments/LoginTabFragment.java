@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.garrett.wiredgamble.AdminMainActivity;
 import com.garrett.wiredgamble.MainActivity;
 import com.garrett.wiredgamble.R;
 import com.parse.FindCallback;
@@ -98,11 +99,21 @@ public class LoginTabFragment extends Fragment {
                 @Override
                 public void done(ParseUser user, ParseException e) {
                     if (user != null) {
-                        // log in the user
-                        Intent intent = new Intent(getActivity(), MainActivity.class);
-                        startActivity(intent);
-                        // close the login activity (to remove the back arrow)
-                        Objects.requireNonNull(getActivity()).finish();
+                        if (user.getUsername().equals("admin")) {
+                            // log in the user
+                            Intent intent = new Intent(getActivity(), AdminMainActivity.class);
+                            startActivity(intent);
+                            // close the login activity (to remove the back arrow)
+                            Objects.requireNonNull(getActivity()).finish();
+                        }
+                        else {
+                            // log in the user
+
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                            startActivity(intent);
+                            // close the login activity (to remove the back arrow)
+                            Objects.requireNonNull(getActivity()).finish();
+                        }
                     } else {
                         Toast.makeText(getContext(), "User Not Found", Toast.LENGTH_LONG).show();
                     }
