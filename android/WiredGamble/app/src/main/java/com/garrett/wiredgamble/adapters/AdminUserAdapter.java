@@ -16,7 +16,7 @@ import java.util.List;
 
 public class AdminUserAdapter extends RecyclerView.Adapter<AdminUserAdapter.ViewHolder> {
 
-    private List<ParseUser> users = new ArrayList<>();
+    private List<ParseUser> users;
     private OnAdminUserListener onAdminUserListener;
 
     public AdminUserAdapter(List<ParseUser> users, OnAdminUserListener onAdminUserListener) {
@@ -26,13 +26,13 @@ public class AdminUserAdapter extends RecyclerView.Adapter<AdminUserAdapter.View
 
     @NonNull
     @Override
-    public AdminUserAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_user_item, parent, false);
-        return new AdminUserAdapter.ViewHolder(view, onAdminUserListener);
+        return new ViewHolder(view, onAdminUserListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdminUserAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.name.setText(users.get(position).getUsername());
         holder.coins.setText(String.valueOf(users.get(position).get("balance")));
         if ((Boolean)users.get(position).get("isAdmin")) {
