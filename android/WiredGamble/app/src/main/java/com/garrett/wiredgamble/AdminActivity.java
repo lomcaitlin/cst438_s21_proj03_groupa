@@ -1,29 +1,31 @@
 package com.garrett.wiredgamble;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.garrett.wiredgamble.adapters.AdminGameAdapter;
 import com.garrett.wiredgamble.adapters.AdminUserAdapter;
 import com.garrett.wiredgamble.models.Game;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AdminActivity extends AppCompatActivity implements AdminUserAdapter.OnAdminUserListener, AdminGameAdapter.OnAdminGameListener {
 
@@ -139,6 +141,39 @@ public class AdminActivity extends AppCompatActivity implements AdminUserAdapter
     @Override
     public void onAdminUserClick(int position) {
         Toast.makeText(this, "Clicked user at: " + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Clicked: " + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, users.get(position).getObjectId(), Toast.LENGTH_SHORT).show();
+        deleteUserAlert(users.get(position));
+    }
+
+    private void deleteUserAlert(ParseUser user) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Delete User")
+                .setMessage("Are you sure you want to delete user " + user.getUsername())
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("user", user.getObjectId());
+//                     ParseCloud.callFunctionInBackground("deleteUser", params, (result, e) -> {
+//                         if (e != null) {
+//                             Log.e("AdminActivity", "Issues loading users", e);
+//                         }
+//                         Log.d("User delete", "Successfully delete user");
+//                         adapter.notifyDataSetChanged();
+//                     });
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .show();
+    }
+
+    private void deleteUser() {
     }
 
     @Override
