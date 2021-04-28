@@ -8,16 +8,21 @@
     tools:context=".AdminMainActivity">
 
 
-
-
-
-    <!--Button
-        android:id="@+id/view_users_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="View Users"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/users_text_view"
+        android:layout_width="273dp"
+        android:layout_height="674dp"
+        android:layout_marginTop="28dp"
+        android:fadeScrollbars="true"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:scrollbars="vertical"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.145"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" /-->
+        app:layout_constraintTop_toTopOf="parent">
+
+    </TextView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,16 +5,47 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import java.util.List;
+
 public class AdminMainActivity extends AppCompatActivity {
+    private TextView mMainDisplay;
+
+    private void displayUsers() throws ParseException {
+        StringBuilder sb = new StringBuilder();
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+            query.findInBackground((objects, e) -> {
+                if (e == null) {
+                    for (int i = 0; i < objects.size(); i++) {
+                    System.out.println(objects.iterator().next().getUsername());
+                    sb.append("User: " + objects.get(i).getUsername() + "\n");
+                    }
+                } else {
+                    System.out.println("No Users Found");
+                }
+                mMainDisplay.setText(sb.toString());
+            });
+    }
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
         setContentView(R.layout.admin_activity_main);
+        mMainDisplay = findViewById(R.id.users_text_view);
+        try {
+            displayUsers();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
