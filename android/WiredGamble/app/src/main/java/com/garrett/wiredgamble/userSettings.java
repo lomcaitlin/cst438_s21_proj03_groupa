@@ -15,6 +15,7 @@ public class userSettings extends AppCompatActivity {
     EditText newPw;
     EditText pwConf;
     Button update;
+    boolean usernameTaken = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +23,7 @@ public class userSettings extends AppCompatActivity {
         ParseUser currentUser = ParseUser.getCurrentUser();
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         newUser = findViewById(R.id.newUsername);
-        newPw =  findViewById(R.id.newPassword);
+        newPw = findViewById(R.id.newPassword);
         pwConf = findViewById(R.id.passwordConf);
         update = findViewById(R.id.updateBtn);
 
@@ -30,19 +31,33 @@ public class userSettings extends AppCompatActivity {
             String username = newUser.getText().toString().trim();
             String password = newPw.getText().toString().trim();
             String passwordConf = pwConf.getText().toString().trim();
-            if(currentUser != null) {
-                    if(password.equals(passwordConf)) {
-                        currentUser.put("username", username);
-                        currentUser.put("password", password);
-                    } else {
-                        Toast.makeText(this, "Passwords don't match!", Toast.LENGTH_SHORT).show();
-                    }
-                currentUser.saveInBackground(e ->{
-                    if(e==null) {
+
+            query.whereEqualTo("username", username);
+
+            query.findInBackground((users, e) -> {
+                if (e == null) {
+                    usernameTaken = true;
+                } else {
+                    usernameTaken = false;
+                }
+            });
+            if (currentUser != null) {
+                if (usernameTaken = true) {
+                    Toast.makeText(this, "Username Taken", Toast.LENGTH_SHORT).show();
+                } if (!password.equals(passwordConf)) {
+                    Toast.makeText(this, "Passwords don't match!", Toast.LENGTH_SHORT).show();
+                }
+                else if (password.equals(passwordConf) && usernameTaken == false) {
+                    currentUser.put("username", username);
+                    currentUser.put("password", password);
+
+
+                    currentUser.saveInBackground(e -> {
+                        if (e == null) {
 //
                             Toast.makeText(this, "Save Successful", Toast.LENGTH_SHORT).show();
 //
-                    }
+                        }
 //                if(query.whereEqualTo("username", username)!= null) {
 //                    Toast.makeText(this, "Username Taken", Toast.LENGTH_SHORT).show();
 //                }else {
@@ -55,12 +70,11 @@ public class userSettings extends AppCompatActivity {
 //                }else {
 //                    currentUser.put("password", password);
 //                }
-                });
+                    });
+                }
             }
 
         });
-
-
 
 
     }
