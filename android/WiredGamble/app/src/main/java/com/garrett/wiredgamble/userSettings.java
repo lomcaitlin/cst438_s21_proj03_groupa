@@ -47,7 +47,7 @@ public class userSettings extends AppCompatActivity {
                 } if (!password.equals(passwordConf)) {
                     Toast.makeText(this, "Passwords don't match!", Toast.LENGTH_SHORT).show();
                 }
-                else if (password.equals(passwordConf) && usernameTaken == false) {
+                else if (password.equals(passwordConf)) {
                     currentUser.put("username", username);
                     currentUser.put("password", password);
 
