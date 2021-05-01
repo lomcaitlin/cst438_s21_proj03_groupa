@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="#d4d4d4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AdminActivity">
@@ -30,23 +31,24 @@
             android:id="@+id/admin_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/aquire_bold"
             android:text="Admin!"
             android:textColor="#1F7035"
             android:textSize="36sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/admin_hello"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@+id/admin_hello"
-            app:layout_constraintTop_toTopOf="@+id/admin_hello"
-            app:layout_constraintVertical_bias="0" />
+            app:layout_constraintTop_toTopOf="@+id/admin_hello" />
 
         <TextView
             android:id="@+id/admin_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Do your Admin stuff"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="10dp"
