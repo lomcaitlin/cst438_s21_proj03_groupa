@@ -8,6 +8,7 @@ package com.garrett.wiredgamble.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 @ParseClassName("PlacedBet")
 public class PlacedBet extends ParseObject {
@@ -15,6 +16,7 @@ public class PlacedBet extends ParseObject {
     public static final String KEY_PAYOUT = "payout";
     public static final String KEY_BET = "bet";
     public static final String KEY_STATUS = "status";
+    public static final String KEY_USER = "user";
 
     public Payout getPayout() {
         return (Payout) getParseObject(KEY_PAYOUT);
@@ -38,5 +40,13 @@ public class PlacedBet extends ParseObject {
 
     public void setStatus(PlacedBetStatus status) {
         put(KEY_STATUS, status.getStatus());
+    }
+
+    public ParseUser getUser() {
+        return getParseUser(KEY_USER);
+    }
+
+    public void setUser(ParseUser user) {
+        put(KEY_USER, user);
     }
 }
