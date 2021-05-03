@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,8 +19,11 @@ import android.widget.Toast;
 import com.garrett.wiredgamble.adapters.GameAdapter;
 import com.garrett.wiredgamble.models.Game;
 import com.garrett.wiredgamble.models.Payout;
+import com.garrett.wiredgamble.models.internal.PlayableGame;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +79,20 @@ public class MainActivity extends AppCompatActivity implements GameAdapter.OnGam
 
     @Override
     public void onGameClick (int position) {
-        Toast.makeText(this, "Clicked: " + position, Toast.LENGTH_SHORT).show();
+        Game game = mGames.get(position);
+        ParseUser user = ParseUser.getCurrentUser();
+
+        PlayableGame playableGame = PlayableGame.fromGame(game, user);
+        Context ctx = getApplicationContext();
+        if (playableGame == null) {
+            Toast.makeText(ctx, "Error Starting Game!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Intent intent = new Intent(ctx, GameActivity.class);
+        intent.putExtra(PlayableGame.class.getSimpleName(), Parcels.wrap(playableGame));
+        intent.putParcelableArrayListExtra("payouts", (ArrayList<? extends Parcelable>) game.getPayouts());
+        startActivity(intent);
     }
 
     @Override
