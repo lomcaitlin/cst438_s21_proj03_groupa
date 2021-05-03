@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,11 @@ import android.widget.Toast;
 import com.garrett.wiredgamble.adapters.AdminGameAdapter;
 import com.garrett.wiredgamble.adapters.AdminUserAdapter;
 import com.garrett.wiredgamble.models.Game;
+import com.parse.FunctionCallback;
+import com.parse.Parse;
+import com.parse.ParseCloud;
+import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -58,9 +64,6 @@ public class AdminActivity extends AppCompatActivity implements AdminUserAdapter
                 Log.e("AdminActivity", "Issues loading games", e);
                 return;
             }
-            for (Game game : games) {
-                Log.d("Games: ", game.getName());
-            }
             this.games.addAll(games);
             gameAdapter.notifyDataSetChanged();
         });
@@ -99,6 +102,7 @@ public class AdminActivity extends AppCompatActivity implements AdminUserAdapter
         if (userIsAdmin()) {
             menu.findItem(R.id.menu_admin).setVisible(true);
         }
+        getSupportActionBar().setTitle(ParseUser.getCurrentUser().getUsername() + " : " + ParseUser.getCurrentUser().get("balance").toString() + "coins");
         return true;
     }
 
@@ -140,40 +144,44 @@ public class AdminActivity extends AppCompatActivity implements AdminUserAdapter
 
     @Override
     public void onAdminUserClick(int position) {
-        Toast.makeText(this, "Clicked user at: " + position, Toast.LENGTH_SHORT).show();
-//        Toast.makeText(this, "Clicked: " + position, Toast.LENGTH_SHORT).show();
-//        Toast.makeText(this, users.get(position).getObjectId(), Toast.LENGTH_SHORT).show();
-        deleteUserAlert(users.get(position));
+        deleteUserAlert(position);
     }
 
-    private void deleteUserAlert(ParseUser user) {
+    private void deleteUserAlert(int position) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Delete User")
-                .setMessage("Are you sure you want to delete user " + user.getUsername())
+                .setMessage("Are you sure you want to delete user: " + users.get(position).getUsername())
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Map<String, String> params = new HashMap<>();
-                        params.put("user", user.getObjectId());
-//                     ParseCloud.callFunctionInBackground("deleteUser", params, (result, e) -> {
-//                         if (e != null) {
-//                             Log.e("AdminActivity", "Issues loading users", e);
-//                         }
-//                         Log.d("User delete", "Successfully delete user");
-//                         adapter.notifyDataSetChanged();
-//                     });
+                        deleteUser(position);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                     }
                 })
                 .show();
     }
 
-    private void deleteUser() {
+    private void deleteUser(int position) {
+        String username = users.get(position).getUsername();
+        Map<String, String> params = new HashMap<>();
+        params.put("id", users.get(position).getObjectId());
+        ParseCloud.callFunctionInBackground("deleteUser", params, new FunctionCallback<ParseUser>() {
+            @Override
+            public void done(ParseUser object, ParseException e) {
+                if (e != null) {
+                    Log.e("AdminActivity", "ParseException: "+ e);
+                    Toast.makeText(AdminActivity.this, "Error when deleting user: "+username, Toast.LENGTH_SHORT).show();
+                }
+                users.remove(position);
+                userAdapter.notifyItemRemoved(position);
+                userAdapter.notifyItemRangeChanged(position, users.size());
+                Toast.makeText(AdminActivity.this, "Successfully deleted user: "+username, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

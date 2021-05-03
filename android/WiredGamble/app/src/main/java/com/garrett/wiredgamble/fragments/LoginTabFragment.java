@@ -99,21 +99,11 @@ public class LoginTabFragment extends Fragment {
                 @Override
                 public void done(ParseUser user, ParseException e) {
                     if (user != null) {
-                        if (user.getUsername().equals("admin")) {
                             // log in the user
-                            Intent intent = new Intent(getActivity(), AdminMainActivity.class);
-                            startActivity(intent);
-                            // close the login activity (to remove the back arrow)
-                            Objects.requireNonNull(getActivity()).finish();
-                        }
-                        else {
-                            // log in the user
-
                             Intent intent = new Intent(getActivity(), MainActivity.class);
                             startActivity(intent);
                             // close the login activity (to remove the back arrow)
                             Objects.requireNonNull(getActivity()).finish();
-                        }
                     } else {
                         Toast.makeText(getContext(), "User Not Found", Toast.LENGTH_LONG).show();
                     }

@@ -1,13 +1,8 @@
-Parse.Cloud.define('deleteUser', async(req) => {
-  const userId = req.params.user;
-  let query = new Parse.Query(Parse.User);
-  query.get(userId).then((user) => {
-    return user.destroy.then((notUser) => {
 
-    }, (e) => {
-      return e;
-    });
-  }, (e) => {
-    return e;
-  });
+Parse.Cloud.define("deleteUser", async (req) => {
+	const query = new Parse.Query(Parse.User);
+	query.equalTo("objectId", req.params.id);
+	const results = await query.find();
+	const user = results[0];
+	return user.destroy({useMasterKey:true});
 });

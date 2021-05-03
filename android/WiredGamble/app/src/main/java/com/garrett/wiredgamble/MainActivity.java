@@ -20,6 +20,9 @@ import com.garrett.wiredgamble.adapters.GameAdapter;
 import com.garrett.wiredgamble.models.Game;
 import com.garrett.wiredgamble.models.Payout;
 import com.garrett.wiredgamble.models.internal.PlayableGame;
+import com.parse.LogInCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -27,6 +30,7 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements GameAdapter.OnGameClickListener {
     private RecyclerView mRvGames;
@@ -102,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements GameAdapter.OnGam
         if (userIsAdmin()) {
             menu.findItem(R.id.menu_admin).setVisible(true);
         }
+        getSupportActionBar().setTitle(ParseUser.getCurrentUser().getUsername() + " : " + ParseUser.getCurrentUser().get("balance").toString() + "coins");
         return true;
     }
 
