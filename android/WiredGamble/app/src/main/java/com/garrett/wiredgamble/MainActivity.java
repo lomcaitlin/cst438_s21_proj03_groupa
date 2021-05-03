@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements GameAdapter.OnGam
                 startActivity(intent);
                 // close the login activity (to remove the back arrow)
                 this.finish();
+                ParseUser.logOut();
                 return true;
                 /*
             case R.id.edit_profile_button:

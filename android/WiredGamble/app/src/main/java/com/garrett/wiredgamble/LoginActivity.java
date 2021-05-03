@@ -3,10 +3,13 @@ package com.garrett.wiredgamble;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.garrett.wiredgamble.adapters.LoginAdapter;
 import com.google.android.material.tabs.TabLayout;
+import com.parse.Parse;
+import com.parse.ParseUser;
 
 import java.util.Objects;
 
@@ -19,7 +22,16 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        //setContentView(R.layout.activity_login);
+        if (ParseUser.getCurrentUser() == null) {
+            setContentView(R.layout.activity_login);
+        } else {
+            //setContentView(R.layout.activity_login);
+            startActivity(new Intent(this, MainActivity.class));
+            setContentView(R.layout.activity_main);
+            this.finish();
+            return;
+        }
 
         // hide the action bar for more space at the top
         Objects.requireNonNull(getSupportActionBar()).hide();

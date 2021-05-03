@@ -63,6 +63,7 @@ public class AdminMainActivity extends AppCompatActivity {
                 startActivity(intent);
                 // close the login activity (to remove the back arrow)
                 this.finish();
+                ParseUser.logOut();
                 return true;
                 /*
             case R.id.edit_profile_button:
