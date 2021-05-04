@@ -41,7 +41,7 @@ public class RouletteFragment extends Fragment {
     private static final int PADDING_BORDER_AMOUNT = 10;
 
     private final HashMap<Character, Payout> mPayoutMap = new HashMap<>();
-    private char mSelectedColor;
+    private Character mSelectedColor;
     private PlayableGame mPlayableGame;
 
     private ImageView ivGameImageP;
@@ -138,13 +138,13 @@ public class RouletteFragment extends Fragment {
                 return;
             }
 
-            clear();
             PlacedBet placedBet = mPlayableGame.register(bet,
                                                          balance,
                                                          payout);
 
             char winner = mPlayableGame.play(placedBet, mPayoutMap, mSelectedColor);
             gameFinished(winner, bet, payout);
+            clear();
         });
     }
 
@@ -152,7 +152,7 @@ public class RouletteFragment extends Fragment {
      * Clear the user input.
      */
     private void clear() {
-        mSelectedColor = '\0';
+        mSelectedColor = 'a';
         ibColor1.setPadding(0, 0, 0, 0);
         ibColor2.setPadding(0, 0, 0, 0);
         ibColor3.setPadding(0, 0, 0, 0);
