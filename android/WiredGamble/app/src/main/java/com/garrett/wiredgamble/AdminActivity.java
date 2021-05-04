@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,11 +19,10 @@ import android.widget.Toast;
 import com.garrett.wiredgamble.adapters.AdminGameAdapter;
 import com.garrett.wiredgamble.adapters.AdminUserAdapter;
 import com.garrett.wiredgamble.models.Game;
+import com.garrett.wiredgamble.models.PlacedBet;
 import com.parse.FunctionCallback;
-import com.parse.Parse;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -120,6 +118,7 @@ public class AdminActivity extends AppCompatActivity implements AdminUserAdapter
                 startActivity(intent);
                 // close the login activity (to remove the back arrow)
                 this.finish();
+                ParseUser.logOut();
                 return true;
                 /*
             case R.id.edit_profile_button:
@@ -154,6 +153,7 @@ public class AdminActivity extends AppCompatActivity implements AdminUserAdapter
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        deleteBets(position);
                         deleteUser(position);
                     }
                 })
@@ -175,12 +175,40 @@ public class AdminActivity extends AppCompatActivity implements AdminUserAdapter
                 if (e != null) {
                     Log.e("AdminActivity", "ParseException: "+ e);
                     Toast.makeText(AdminActivity.this, "Error when deleting user: "+username, Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 users.remove(position);
                 userAdapter.notifyItemRemoved(position);
                 userAdapter.notifyItemRangeChanged(position, users.size());
                 Toast.makeText(AdminActivity.this, "Successfully deleted user: "+username, Toast.LENGTH_SHORT).show();
             }
+        });
+    }
+
+    private void deleteBets(int position) {
+        ParseQuery<ParseUser> queryUser = ParseUser.getQuery();
+        queryUser.whereEqualTo("username", users.get(position).getUsername());
+        queryUser.findInBackground((user, e) -> {
+            if (e != null) {
+                Log.e("AdminActivity", "Error getting user: " + e);
+                return;
+            }
+            ParseQuery<PlacedBet> query = ParseQuery.getQuery(PlacedBet.class);
+            query.whereEqualTo("user", user.get(0));
+            query.findInBackground((bets, e2) -> {
+                if (e2 != null) {
+                    Log.e("AdminActivity", "Error getting PlacedBets: " + e2.getMessage());
+                    return;
+                }
+                for (PlacedBet bet : bets) {
+                    bet.deleteInBackground(e3 -> {
+                        if (e3 != null) {
+                            Log.e("AdminActivity", "Error deleting PlacedBets: " + e3.getMessage());
+                            return;
+                        }
+                    });
+                }
+            });
         });
     }
 
