@@ -11,16 +11,16 @@
         android:layout_height="0dp"
         android:scaleType="centerCrop"
         android:src="@drawable/login_bg"
-        app:layout_constraintHeight_percent=".3"
+        app:layout_constraintHeight_percent=".45"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:elevation="1dp"
         android:alpha="1"
         android:text="Games"
@@ -31,13 +31,18 @@
         android:shadowDx="0"
         android:shadowDy="-4"
         android:shadowRadius="2"
-        android:layout_margin="20dp"
+        android:layout_margin="60dp"
         android:paddingTop="20dp"
-        android:fontFamily="@font/aquire_regular"/>
+        android:paddingBottom="20dp"
+        android:fontFamily="@font/aquire_regular"
+        app:layout_constraintBottom_toTopOf="@id/rvGames"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"  />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="Games"
         android:textColor="#1f7035"
         android:textAlignment="center"
@@ -46,20 +51,28 @@
         android:shadowDx="0"
         android:shadowDy="4"
         android:shadowRadius="15"
-        android:layout_margin="20dp"
+        android:layout_margin="60dp"
         android:paddingTop="20dp"
-        android:fontFamily="@font/aquire_regular" />
+        android:paddingBottom="20dp"
+        android:fontFamily="@font/aquire_regular"
+        app:layout_constraintBottom_toTopOf="@id/rvGames"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvGames"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/rv_bg"
-        android:padding="6dp"
+        android:paddingTop="6dp"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        app:layout_constraintHeight_max="500dp"
         app:layout_constraintCircleRadius="20dp"
         app:layout_constraintVertical_bias="1"
-        app:layout_constraintHeight_percent=".75"
+        app:layout_constraintHeight_percent="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

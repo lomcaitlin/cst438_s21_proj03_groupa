@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_play"
+        android:icon="@drawable/ic_play_game"
+        android:title="Play"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_leaderboard"
+        android:icon="@drawable/ic_leaderboard"
+        android:title="Leaderboard"
+        app:showAsAction="always" />
+</menu>
