@@ -1,7 +1,6 @@
 package com.garrett.wiredgamble;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -9,6 +8,8 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
 
