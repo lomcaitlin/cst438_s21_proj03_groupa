@@ -126,15 +126,13 @@ public class MainActivity extends AppCompatActivity implements GameAdapter.OnGam
                 this.finish();
                 ParseUser.logOut();
                 return true;
-                /*
+
             case R.id.edit_profile_button:
-                @Breanna -> uncomment this and change the below line of code to the activity that you create for the profile
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                Intent intent1 = new Intent(this, userSettings.class);
+                startActivity(intent1);
                 // close the login activity (to remove the back arrow)
-                this.finish();
                 return true;
-                */
+
         }
         return super.onOptionsItemSelected(item);
     }
