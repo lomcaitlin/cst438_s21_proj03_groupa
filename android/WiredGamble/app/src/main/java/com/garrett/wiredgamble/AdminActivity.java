@@ -100,7 +100,10 @@ public class AdminActivity extends AppCompatActivity implements AdminUserAdapter
         if (userIsAdmin()) {
             menu.findItem(R.id.menu_admin).setVisible(true);
         }
-        getSupportActionBar().setTitle(ParseUser.getCurrentUser().getUsername() + " : " + ParseUser.getCurrentUser().get("balance").toString() + "coins");
+        if (userIsBroke()) {
+            menu.findItem(R.id.menu_coins).setVisible(true);
+        }
+        getSupportActionBar().setTitle(ParseUser.getCurrentUser().getUsername() + " : " + ParseUser.getCurrentUser().get("balance").toString() + " coins");
         return true;
     }
 
@@ -120,15 +123,12 @@ public class AdminActivity extends AppCompatActivity implements AdminUserAdapter
                 this.finish();
                 ParseUser.logOut();
                 return true;
-                /*
             case R.id.edit_profile_button:
-                @Breanna -> uncomment this and change the below line of code to the activity that you create for the profile
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                Intent intent1 = new Intent(this, MainActivity.class);
+                startActivity(intent1);
                 // close the login activity (to remove the back arrow)
                 this.finish();
                 return true;
-                */
         }
         return super.onOptionsItemSelected(item);
     }
@@ -136,6 +136,14 @@ public class AdminActivity extends AppCompatActivity implements AdminUserAdapter
     public boolean userIsAdmin() {
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null && currentUser.getBoolean("isAdmin")) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean userIsBroke() {
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null && Integer.parseInt(currentUser.get("balance").toString()) == 0) {
             return true;
         }
         return false;

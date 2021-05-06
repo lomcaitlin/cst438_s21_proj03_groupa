@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.garrett.wiredgamble.adapters.GameAdapter;
@@ -106,6 +107,9 @@ public class MainActivity extends AppCompatActivity implements GameAdapter.OnGam
         if (userIsAdmin()) {
             menu.findItem(R.id.menu_admin).setVisible(true);
         }
+        if (userIsBroke()) {
+            menu.findItem(R.id.menu_coins).setVisible(true);
+        }
         getSupportActionBar().setTitle(ParseUser.getCurrentUser().getUsername() + " : " + ParseUser.getCurrentUser().get("balance").toString() + " coins");
         return true;
     }
@@ -113,6 +117,18 @@ public class MainActivity extends AppCompatActivity implements GameAdapter.OnGam
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.menu_coins:
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                currentUser.put("balance", Integer.parseInt(currentUser.get("balance").toString())+100);
+                currentUser.saveInBackground(e -> {
+                    if (e != null) {
+                        Log.e("MainActivity", "Error adding coins");
+                        return;
+                    }
+                    findViewById(R.id.menu_coins).setVisibility(View.INVISIBLE);
+                    getSupportActionBar().setTitle(ParseUser.getCurrentUser().getUsername() + " : " + ParseUser.getCurrentUser().get("balance").toString() + " coins");
+                });
+                return true;
             case R.id.menu_home:
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
@@ -128,11 +144,10 @@ public class MainActivity extends AppCompatActivity implements GameAdapter.OnGam
                 return true;
 
             case R.id.edit_profile_button:
-                Intent intent1 = new Intent(this, userSettings.class);
+                Intent intent1 = new Intent(this, MainActivity.class);
                 startActivity(intent1);
                 // close the login activity (to remove the back arrow)
                 return true;
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -140,6 +155,14 @@ public class MainActivity extends AppCompatActivity implements GameAdapter.OnGam
     public boolean userIsAdmin() {
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null && currentUser.getBoolean("isAdmin")) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean userIsBroke() {
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null && Integer.parseInt(currentUser.get("balance").toString()) == 0) {
             return true;
         }
         return false;

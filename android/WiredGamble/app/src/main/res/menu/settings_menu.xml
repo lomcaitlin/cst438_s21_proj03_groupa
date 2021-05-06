@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:title="Get Coins"
+        android:id="@+id/menu_coins"
+        app:showAsAction="always"
+        android:visible="false"/>
+
+    <item
         android:title="Home"
         android:id="@+id/menu_home"
         app:showAsAction="never" />
