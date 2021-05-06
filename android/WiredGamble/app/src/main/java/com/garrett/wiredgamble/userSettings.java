@@ -34,34 +34,58 @@ public class userSettings extends AppCompatActivity {
 
             query.whereEqualTo("username", username);
 
-//            query.findInBackground((users, r) -> {
-//                if (r == null) {
-//                    usernameTaken = true;
-//                } else {
-//                    usernameTaken = false;
+            query.findInBackground((users, r) -> {
+                if (r != null || users.size() > 0) {
+                    usernameTaken = true;
+                } else {
+                    usernameTaken = false;
+                }
+                if (currentUser != null) {
+                    //fix; not really checking anything
+                    if (usernameTaken == true) {
+                        Toast.makeText(this, "Username Taken", Toast.LENGTH_SHORT).show();
+                    }if (!password.equals(passwordConf)) {
+                        Toast.makeText(this, "Passwords don't match!", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (password.equals(passwordConf)) {
+                        currentUser.put("username", username);
+                        currentUser.put("password", password);
+
+
+                        currentUser.saveInBackground(e -> {
+                            if (e == null) {
+
+                                Toast.makeText(this, "Save Successful", Toast.LENGTH_SHORT).show();
+                            }
+
+
+                        });
+                    }
+                }
+            });
+
+//            if (currentUser != null) {
+//                //fix; not really checking anything
+//                if (query.whereEqualTo("username", username) == null) {
+//                    Toast.makeText(this, "Username Taken", Toast.LENGTH_SHORT).show();
+//                }if (!password.equals(passwordConf)) {
+//                    Toast.makeText(this, "Passwords don't match!", Toast.LENGTH_SHORT).show();
 //                }
-//            });
-            if (currentUser != null) {
-                if (query.whereEqualTo("username", username) == null) {
-                    Toast.makeText(this, "Username Taken", Toast.LENGTH_SHORT).show();
-                }if (!password.equals(passwordConf)) {
-                    Toast.makeText(this, "Passwords don't match!", Toast.LENGTH_SHORT).show();
-                }
-                else if (password.equals(passwordConf)) {
-                    currentUser.put("username", username);
-                    currentUser.put("password", password);
-
-
-                    currentUser.saveInBackground(e -> {
-                        if (e == null) {
-
-                            Toast.makeText(this, "Save Successful", Toast.LENGTH_SHORT).show();
-                        }
-
-
-                    });
-                }
-            }
+//                else if (password.equals(passwordConf)) {
+//                    currentUser.put("username", username);
+//                    currentUser.put("password", password);
+//
+//
+//                    currentUser.saveInBackground(e -> {
+//                        if (e == null) {
+//
+//                            Toast.makeText(this, "Save Successful", Toast.LENGTH_SHORT).show();
+//                        }
+//
+//
+//                    });
+//                }
+//            }
 
         });
 
