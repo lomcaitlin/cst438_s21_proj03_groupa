@@ -2,7 +2,9 @@ package com.garrett.wiredgamble;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,9 +20,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.garrett.wiredgamble.fragments.LeaderboardFragment;
 import com.garrett.wiredgamble.fragments.RouletteFragment;
 import com.garrett.wiredgamble.models.Payout;
 import com.garrett.wiredgamble.models.internal.PlayableGame;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -34,7 +38,9 @@ public class GameActivity extends AppCompatActivity {
     private PlayableGame mPlayableGame;
 
     private TextView tvGameNameP, tvGameNamePB;
+    private BottomNavigationView bnvGame;
 
+    @SuppressLint ("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +55,25 @@ public class GameActivity extends AppCompatActivity {
         tvGameNameP.setText(mPlayableGame.getGame().getName());
         tvGameNamePB.setText(mPlayableGame.getGame().getName());
 
+        bnvGame = (BottomNavigationView) findViewById(R.id.bnvGame);
+        bnvGame.setOnNavigationItemSelectedListener(item -> {
+            Fragment fragment;
+            switch (item.getItemId()) {
+                case R.id.action_leaderboard:
+                    fragment = new LeaderboardFragment();
+                    break;
+                case R.id.action_play:
+                default:
+                    fragment = mPlayableGame.getFragment();
+                    break;
+            }
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.flGameFrag, fragment).commit();
+            return true;
+        });
+
         getSupportFragmentManager().beginTransaction().replace(R.id.flGameFrag, mPlayableGame.getFragment()).commit();
+
     }
 
     @Override
