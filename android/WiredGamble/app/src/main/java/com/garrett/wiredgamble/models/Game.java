@@ -23,6 +23,7 @@ public class Game extends ParseObject {
     public static final String KEY_NAME = "name";
     public static final String KEY_SEED = "seed";
     public static final String KEY_IMAGE = "image";
+    public static final String KEY_DESCRIPTION = "description";
 
     private List<Payout> mPayouts;
 
@@ -53,6 +54,14 @@ public class Game extends ParseObject {
 
     public void setImage(ParseFile image) {
         put(KEY_IMAGE, image);
+    }
+
+    public String getDescription() {
+        return getString(KEY_DESCRIPTION);
+    }
+
+    public void setDescription(String description) {
+        put(KEY_DESCRIPTION, description);
     }
 
     public List<Payout> getPayouts() {

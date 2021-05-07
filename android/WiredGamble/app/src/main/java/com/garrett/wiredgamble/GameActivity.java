@@ -1,6 +1,7 @@
 package com.garrett.wiredgamble;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,6 +40,7 @@ public class GameActivity extends AppCompatActivity {
     private PlayableGame mPlayableGame;
 
     private TextView tvGameNameP, tvGameNamePB;
+    private ImageButton ibInfo;
     private BottomNavigationView bnvGame;
 
     @SuppressLint ("NonConstantResourceId")
@@ -54,6 +57,15 @@ public class GameActivity extends AppCompatActivity {
         tvGameNamePB = (TextView) findViewById(R.id.tvGameNamePB);
         tvGameNameP.setText(mPlayableGame.getGame().getName());
         tvGameNamePB.setText(mPlayableGame.getGame().getName());
+
+        ibInfo = (ImageButton) findViewById(R.id.ibInfo);
+        ibInfo.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(mPlayableGame.getGame().getName() + " info")
+                    .setMessage(mPlayableGame.getGame().getDescription())
+                    .setNeutralButton("close", ((dialog, which) -> {}))
+                    .show();
+        });
 
         bnvGame = (BottomNavigationView) findViewById(R.id.bnvGame);
         bnvGame.setOnNavigationItemSelectedListener(item -> {
