@@ -85,7 +85,10 @@ public class GameActivity extends AppCompatActivity {
         });
 
         getSupportFragmentManager().beginTransaction().replace(R.id.flGameFrag, mPlayableGame.getFragment()).commit();
-
+        getSupportActionBar().setTitle(mPlayableGame.getUser().getUsername()
+                + " : "
+                + mPlayableGame.getUser().get("balance").toString()
+                + " coins");
     }
 
     @Override

@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements GameAdapter.OnGam
         if (userIsAdmin()) {
             menu.findItem(R.id.menu_admin).setVisible(true);
         }
-        getSupportActionBar().setTitle(ParseUser.getCurrentUser().getUsername() + " : " + ParseUser.getCurrentUser().get("balance").toString() + "coins");
+        getSupportActionBar().setTitle(ParseUser.getCurrentUser().getUsername() + " : " + ParseUser.getCurrentUser().get("balance").toString() + " coins");
         return true;
     }
 

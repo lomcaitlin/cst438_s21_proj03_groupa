@@ -1,13 +1,17 @@
 package com.garrett.wiredgamble.fragments;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,12 +47,13 @@ public class RouletteFragment extends Fragment {
     private final HashMap<Character, Payout> mPayoutMap = new HashMap<>();
     private Character mSelectedColor;
     private PlayableGame mPlayableGame;
+    private ActionBar mActionBar;
 
     private ImageView ivGameImageP;
     private CardView cvColor;
     private ImageButton ibColor1, ibColor2, ibColor3;
-    private TextView tvColor1, tvColor2, tvColor3;
-    private EditText etBet, e;
+    private TextView tvColor1, tvColor2, tvColor3, tvWinner;
+    private EditText etBet;
     private Button btnPlay;
 
 
@@ -73,6 +78,7 @@ public class RouletteFragment extends Fragment {
 
         GameActivity a = (GameActivity) getActivity();
         mPlayableGame = a.getPlayableGame();
+        mActionBar = a.getSupportActionBar();
     }
 
     @Override
@@ -89,7 +95,26 @@ public class RouletteFragment extends Fragment {
         wireUpDisplay(view);
         clear();
 
+        etBet.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged (CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged (CharSequence s, int start, int before, int count) {
+                tvWinner.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged (Editable s) {
+
+            }
+        });
+
         ibColor1.setOnClickListener(v -> {
+            tvWinner.setVisibility(View.INVISIBLE);
+
             ibColor2.setPadding(0, 0, 0, 0);
             ibColor3.setPadding(0, 0, 0, 0);
             ibColor1.setPadding(PADDING_BORDER_AMOUNT,
@@ -99,6 +124,8 @@ public class RouletteFragment extends Fragment {
             mSelectedColor = 'b';
         });
         ibColor2.setOnClickListener(v -> {
+            tvWinner.setVisibility(View.INVISIBLE);
+
             ibColor1.setPadding(0, 0, 0, 0);
             ibColor3.setPadding(0, 0, 0, 0);
             ibColor2.setPadding(PADDING_BORDER_AMOUNT,
@@ -108,6 +135,8 @@ public class RouletteFragment extends Fragment {
             mSelectedColor = 'r';
         });
         ibColor3.setOnClickListener(v -> {
+            tvWinner.setVisibility(View.INVISIBLE);
+
             ibColor1.setPadding(0, 0, 0, 0);
             ibColor2.setPadding(0, 0, 0, 0);
             ibColor3.setPadding(PADDING_BORDER_AMOUNT,
@@ -118,6 +147,8 @@ public class RouletteFragment extends Fragment {
         });
 
         btnPlay.setOnClickListener(v -> {
+            tvWinner.setVisibility(View.INVISIBLE);
+
             String b = etBet.getText().toString();
             double bet = 0.0;
 
@@ -145,6 +176,7 @@ public class RouletteFragment extends Fragment {
             char winner = mPlayableGame.play(placedBet, mPayoutMap, mSelectedColor);
             gameFinished(winner, bet, payout);
             clear();
+            tvWinner.setVisibility(View.VISIBLE);
         });
     }
 
@@ -197,28 +229,41 @@ public class RouletteFragment extends Fragment {
      * @param bet       a double of the amount the user bet
      * @param payout    a Payout that the user bet on
      */
+    @SuppressLint ("DefaultLocale")
     private void gameFinished(char winner, double bet, Payout payout) {
         String msg;
+        String color = "#FFFFFF";
         switch (winner) {
             case 'b':
                 msg = "Black won!";
+                color = "#000000";
                 break;
             case 'r':
                 msg = "Red won!";
+                color = "#AA0000";
                 break;
             case 'g':
                 msg = "Green won!";
+                color = "#00AA00";
                 break;
             default:
                 msg = "Error spinning the roulette wheel!";
         }
 
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+        tvWinner.setText(msg);
+        tvWinner.setTextColor(Color.parseColor(color));
+        tvWinner.setBackgroundColor(mPayoutMap.get(winner) != null ? Color.WHITE : Color.BLACK);
+
         Toast.makeText(getContext(),
                        winner == mSelectedColor ?
                             String.format("You won %.2f!", bet * payout.getMultiplier()) :
                             String.format("You Lost %.2f", bet),
                        Toast.LENGTH_SHORT).show();
+
+        mActionBar.setTitle(mPlayableGame.getUser().getUsername()
+                + " : "
+                + mPlayableGame.getUser().get("balance").toString()
+                + " coins");
     }
 
     @SuppressLint("DefaultLocale")
@@ -226,6 +271,7 @@ public class RouletteFragment extends Fragment {
         tvColor1 = (TextView) view.findViewById(R.id.tvColor1);
         tvColor2 = (TextView) view.findViewById(R.id.tvColor2);
         tvColor3 = (TextView) view.findViewById(R.id.tvColor3);
+        tvWinner = (TextView) view.findViewById(R.id.tvWinner);
 
         ivGameImageP = (ImageView) view.findViewById(R.id.ivGameImageP);
 
@@ -247,11 +293,11 @@ public class RouletteFragment extends Fragment {
         ivGameImageP.setBackgroundResource(R.drawable.login_bg);
 
         cvColor = view.findViewById(R.id.cvColor1);
-        ibColor1 = (ImageButton) cvColor.getChildAt(0);
+        ibColor1 = (ImageButton) cvColor.getChildAt(1);
         cvColor = view.findViewById(R.id.cvColor2);
-        ibColor2 = (ImageButton) cvColor.getChildAt(0);
+        ibColor2 = (ImageButton) cvColor.getChildAt(1);
         cvColor = view.findViewById(R.id.cvColor3);
-        ibColor3 = (ImageButton) cvColor.getChildAt(0);
+        ibColor3 = (ImageButton) cvColor.getChildAt(1);
 
         etBet = (EditText) view.findViewById(R.id.etCoins);
         btnPlay = (Button) view.findViewById(R.id.btnPlay);
