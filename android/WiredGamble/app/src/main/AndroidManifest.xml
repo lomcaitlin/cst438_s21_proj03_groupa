@@ -14,9 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WiredGamble">
         <activity android:name=".GameActivity" android:parentActivityName=".MainActivity"></activity>
-
         <activity android:name=".userSettings"></activity>
-
         <activity
             android:name=".LoginActivity"
             android:windowSoftInputMode="adjustPan">
