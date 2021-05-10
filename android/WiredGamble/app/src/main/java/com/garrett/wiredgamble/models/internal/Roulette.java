@@ -6,8 +6,6 @@
  */
 package com.garrett.wiredgamble.models.internal;
 
-import android.util.Log;
-
 import androidx.fragment.app.Fragment;
 
 import com.garrett.wiredgamble.fragments.RouletteFragment;

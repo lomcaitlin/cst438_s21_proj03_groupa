@@ -1,8 +1,11 @@
 package com.garrett.wiredgamble;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,14 +16,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.garrett.wiredgamble.fragments.LeaderboardFragment;
 import com.garrett.wiredgamble.fragments.RouletteFragment;
 import com.garrett.wiredgamble.models.Payout;
 import com.garrett.wiredgamble.models.internal.PlayableGame;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -34,7 +40,10 @@ public class GameActivity extends AppCompatActivity {
     private PlayableGame mPlayableGame;
 
     private TextView tvGameNameP, tvGameNamePB;
+    private ImageButton ibInfo;
+    private BottomNavigationView bnvGame;
 
+    @SuppressLint ("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +58,37 @@ public class GameActivity extends AppCompatActivity {
         tvGameNameP.setText(mPlayableGame.getGame().getName());
         tvGameNamePB.setText(mPlayableGame.getGame().getName());
 
+        ibInfo = (ImageButton) findViewById(R.id.ibInfo);
+        ibInfo.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(mPlayableGame.getGame().getName() + " info")
+                    .setMessage(mPlayableGame.getGame().getDescription())
+                    .setNeutralButton("close", ((dialog, which) -> {}))
+                    .show();
+        });
+
+        bnvGame = (BottomNavigationView) findViewById(R.id.bnvGame);
+        bnvGame.setOnNavigationItemSelectedListener(item -> {
+            Fragment fragment;
+            switch (item.getItemId()) {
+                case R.id.action_leaderboard:
+                    fragment = new LeaderboardFragment();
+                    break;
+                case R.id.action_play:
+                default:
+                    fragment = mPlayableGame.getFragment();
+                    break;
+            }
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.flGameFrag, fragment).commit();
+            return true;
+        });
+
         getSupportFragmentManager().beginTransaction().replace(R.id.flGameFrag, mPlayableGame.getFragment()).commit();
+        getSupportActionBar().setTitle(mPlayableGame.getUser().getUsername()
+                + " : "
+                + mPlayableGame.getUser().get("balance").toString()
+                + " coins");
     }
 
     @Override

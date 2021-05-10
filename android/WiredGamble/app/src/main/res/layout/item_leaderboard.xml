@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="120dp">
+
+    <ImageView
+        android:id="@+id/ivUser"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:elevation="20dp"
+        android:src="@drawable/user_profile"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+        app:layout_constraintVertical_bias="0" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="110dp"
+        android:background="@drawable/admin_users_bg"
+        android:elevation="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="20dp">
+
+        <TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_bias=".1"
+            app:layout_constraintVertical_bias=".15"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvWinPercentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Win Percentage: 50%"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@id/tvUsername"
+            app:layout_constraintTop_toBottomOf="@id/tvUsername"
+            app:layout_constraintVertical_bias="0" />
+
+        <TextView
+            android:id="@+id/tvTotalCoinsWon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Total Won: 2000 coins"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="1dp"
+            app:layout_constraintStart_toStartOf="@id/tvWinPercentage"
+            app:layout_constraintTop_toBottomOf="@id/tvWinPercentage"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0" />
+
+        <TextView
+            android:id="@+id/tvLargestWin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Largest Win: 100 coins"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="1dp"
+            app:layout_constraintStart_toStartOf="@id/tvTotalCoinsWon"
+            app:layout_constraintTop_toBottomOf="@id/tvTotalCoinsWon"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
