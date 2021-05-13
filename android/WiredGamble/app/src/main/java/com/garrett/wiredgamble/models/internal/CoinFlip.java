@@ -24,7 +24,7 @@ public class CoinFlip extends PlayableGame{
         super(game, user);
     }
     @Override
-    public Fragment getsFragment(){
+    public Fragment getFragment(){
         return sFragment;
     }
     @Override
