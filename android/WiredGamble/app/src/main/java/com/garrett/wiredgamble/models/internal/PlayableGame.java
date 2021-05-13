@@ -103,7 +103,8 @@ public abstract class PlayableGame {
         switch (game.getName().toLowerCase()) {
             case "roulette":
                 return new Roulette(game, user);
-
+            case "coin flip":
+                return new CoinFlip(game, user);
             default:
                 return null;
         }

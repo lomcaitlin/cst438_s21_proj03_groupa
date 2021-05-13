@@ -2,6 +2,7 @@ package com.garrett.wiredgamble.models.internal;
 
 import androidx.fragment.app.Fragment;
 
+import com.garrett.wiredgamble.fragments.CoinFlipFragment;
 import com.garrett.wiredgamble.fragments.RouletteFragment;
 import com.garrett.wiredgamble.models.Game;
 import com.garrett.wiredgamble.models.Payout;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 
 @Parcel
 public class CoinFlip extends PlayableGame{
-    private static final Fragment sFragment = new RouletteFragment();
+    private static final Fragment sFragment = new CoinFlipFragment();
 
     public CoinFlip(){
 
