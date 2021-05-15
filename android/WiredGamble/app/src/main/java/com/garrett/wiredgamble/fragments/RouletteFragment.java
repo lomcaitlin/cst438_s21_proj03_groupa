@@ -1,6 +1,7 @@
 package com.garrett.wiredgamble.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.garrett.wiredgamble.GameActivity;
+import com.garrett.wiredgamble.MainActivity;
 import com.garrett.wiredgamble.R;
 import com.garrett.wiredgamble.models.Payout;
 import com.garrett.wiredgamble.models.PlacedBet;
@@ -79,6 +81,9 @@ public class RouletteFragment extends Fragment {
         GameActivity a = (GameActivity) getActivity();
         mPlayableGame = a.getPlayableGame();
         mActionBar = a.getSupportActionBar();
+        if (mPlayableGame == null) {
+            startActivity(new Intent(getActivity(), MainActivity.class));
+        }
     }
 
     @Override
