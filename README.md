@@ -16,7 +16,8 @@
 ## Mockups and ERDs
 ![mockups](https://i.imgur.com/UR9TX4h.png)
 
-![ERD](https://i.imgur.com/Ys4DO10.png)
+![ERD](https://i.imgur.com/yFJKdDz.png)
+
 ## Technologies
 - [Android](https://www.android.com/)
 - [Node.JS](https://nodejs.org/en/)

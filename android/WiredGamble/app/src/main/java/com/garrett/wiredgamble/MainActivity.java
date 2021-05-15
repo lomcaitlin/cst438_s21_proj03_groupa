@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements GameAdapter.OnGam
         intent.putExtra(PlayableGame.class.getSimpleName(), Parcels.wrap(playableGame));
         intent.putParcelableArrayListExtra("payouts", (ArrayList<? extends Parcelable>) game.getPayouts());
         startActivity(intent);
+        this.finish();
     }
 
     @Override
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements GameAdapter.OnGam
         switch (item.getItemId()) {
             case R.id.menu_coins:
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                currentUser.put("balance", Integer.parseInt(currentUser.get("balance").toString())+100);
+                currentUser.put("balance", Double.parseDouble(currentUser.get("balance").toString())+100);
                 currentUser.saveInBackground(e -> {
                     if (e != null) {
                         Log.e("MainActivity", "Error adding coins");
@@ -144,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements GameAdapter.OnGam
                 return true;
 
             case R.id.edit_profile_button:
-                Intent intent1 = new Intent(this, MainActivity.class);
+                Intent intent1 = new Intent(this, userSettings.class);
                 startActivity(intent1);
                 // close the login activity (to remove the back arrow)
                 return true;
@@ -162,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements GameAdapter.OnGam
 
     public boolean userIsBroke() {
         ParseUser currentUser = ParseUser.getCurrentUser();
-        if (currentUser != null && Integer.parseInt(currentUser.get("balance").toString()) == 0) {
+        if (currentUser != null && Double.parseDouble(currentUser.get("balance").toString()) == 0) {
             return true;
         }
         return false;

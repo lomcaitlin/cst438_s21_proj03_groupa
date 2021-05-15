@@ -124,7 +124,7 @@ public class AdminActivity extends AppCompatActivity implements AdminUserAdapter
                 ParseUser.logOut();
                 return true;
             case R.id.edit_profile_button:
-                Intent intent1 = new Intent(this, MainActivity.class);
+                Intent intent1 = new Intent(this, userSettings.class);
                 startActivity(intent1);
                 // close the login activity (to remove the back arrow)
                 this.finish();

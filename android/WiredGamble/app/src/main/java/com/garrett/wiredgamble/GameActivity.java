@@ -110,9 +110,11 @@ public class GameActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_home:
                 startActivity(new Intent(this, MainActivity.class));
+                this.finish();
                 return true;
             case R.id.menu_admin:
                 startActivity(new Intent(this, AdminActivity.class));
+                this.finish();
                 return true;
             case R.id.logout_button:
                 Intent intent = new Intent(this, LoginActivity.class);
@@ -122,7 +124,7 @@ public class GameActivity extends AppCompatActivity {
                 ParseUser.logOut();
                 return true;
             case R.id.edit_profile_button:
-                Intent intent1 = new Intent(this, MainActivity.class);
+                Intent intent1 = new Intent(this, userSettings.class);
                 startActivity(intent1);
                 // close the login activity (to remove the back arrow)
                 this.finish();
@@ -141,7 +143,7 @@ public class GameActivity extends AppCompatActivity {
 
     public boolean userIsBroke() {
         ParseUser currentUser = ParseUser.getCurrentUser();
-        if (currentUser != null && Integer.parseInt(currentUser.get("balance").toString()) == 0) {
+        if (currentUser != null && Double.parseDouble(currentUser.get("balance").toString()) == 0) {
             return true;
         }
         return false;

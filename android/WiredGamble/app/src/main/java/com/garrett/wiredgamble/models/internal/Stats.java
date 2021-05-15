@@ -126,7 +126,7 @@ public class Stats {
             Stats curr = stats.get(i);
             j = i;
 
-            while((j > 0) && (stats.get(j - 1).getWinPercent() < curr.getWinPercent())) {
+            while((j > 0) && (stats.get(j - 1).getTotalWon() < curr.getTotalWon())) {
                 stats.set(j, stats.get(j - 1));
                 --j;
             }
