@@ -20,4 +20,4 @@
 
 ## Technologies
 - [Android](https://www.android.com/)
-- [Node.JS](https://nodejs.org/en/)
+- [Parse/Back4App](https://www.back4app.com/)
